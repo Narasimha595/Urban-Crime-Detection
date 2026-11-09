@@ -1,0 +1,671 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>user detection</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- Favicons -->
+    <link href="{% static "main/img/detective.png" %}" rel="icon">
+    <link href="{% static "main/img/detective.png" %}" rel="apple-touch-icon">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{% static "main/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/aos/aos.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/glightbox/css/glightbox.min.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/swiper/swiper-bundle.min.css" %}" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="{% static "main/css/main.css" %}" rel="stylesheet">
+</head>
+<body class="index-page">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+            <a href="{% url "user_dashboard" %}" class="logo d-flex align-items-center">
+                <img src="{% static "main/img/detective.png" %}" alt="">
+                <h1 class="sitename">Crime Detection</h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url "user_dashboard" %}">Dashboard</a></li>
+                    <li><a href="{% url 'detection_new' %}" class="active">Crime Detection</a></li>
+                    <li><a href="{% url "profile" %}">Profile</a></li>
+                    <li><a href="{% url "user_feedback" %}">Feedback</a></li>
+                    <li><a href="{% url 'user' %}">Logout</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="page-title dark-background" data-aos="fade">
+          <div class="heading py-5 text-center">
+            <!-- Optional Title Here -->
+          </div>
+        </div><!-- End Page Title -->
+        
+        <!-- Prediction Result Section -->
+        <section class="prediction-result py-4">
+          <div class="container">
+            <!-- Django messages -->
+            <div class="row col-12 ">
+                <div class="col">
+                  {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}" role="alert">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+                <!-- Button column -->
+                <div class="col text-right">
+                  <button id="toggleMetrics" class="btn btn-primary my-3">Show Model Metrics</button>
+                </div>
+              </div>
+              
+              <!-- Container hidden by default -->
+              <div id="metricsContainer" class="container-fluid " style="display: none;">
+                <div class="row   m-4 d-flex align-items-stretch" align="center" >
+                  <div class="col-md-6 card d-flex flex-column" style="height: 400px; ">
+                    <h3 class="card-title text-center mt-3 mb-3" style="font-size: 40px; color: #0056b3;">Prediction Graph</h3>
+                    <canvas id="myChart" style="width:100%; height: 300px;" class="m-auto mb-3 shadow-lg bg-white p-4 rounded"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                  </div>
+                  <div class="col-md-6 hover-container d-flex flex-column justify-content-center">
+                    <div class="card shadow-lg" style="border: 1px solid #ccc; border-radius: 8px; overflow: hidden; margin: 20px; background: #ffffff;">
+                        <div class="card-header" style="background-color: #007bff; color: white; padding: 12px 20px; font-size: 1.6em; font-weight: bold;">
+                          Model Details
+                        </div>
+                        <div style="padding: 20px;">
+                          {% if model_details %}
+                            <table style="width: 100%; font-size: 1.2em; font-weight: 600; border-collapse: collapse;">
+                              <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px 15px; background-color: #f9f9f9;">Model Name:</td>
+                                <td style="padding: 10px 15px;">Adaptive Region Partitioning (ARP)</td>
+                              </tr>
+                              <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px 15px; background-color: #f9f9f9;">Accuracy:</td>
+                                <td style="padding: 10px 15px;">{{ model_details.accuracy }}</td>
+                              </tr>
+                              <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px 15px; background-color: #f9f9f9;">Precision:</td>
+                                <td style="padding: 10px 15px;">{{ model_details.precision }}</td>
+                              </tr>
+                              <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px 15px; background-color: #f9f9f9;">F1 Score:</td>
+                                <td style="padding: 10px 15px;">{{ model_details.f1_score }}</td>
+                              </tr>
+                              <tr>
+                                <td style="padding: 10px 15px; background-color: #f9f9f9;">Recall:</td>
+                                <td style="padding: 10px 15px;">{{ model_details.recall }}</td>
+                              </tr>
+                            </table>
+                          {% else %}
+                            <p style="padding: 20px; font-size: 1.2em; text-align: center;">No model details available.</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                      
+                  </div>
+                </div>
+              </div>
+              
+              <script>
+                // Global variable to store the chart instance
+                var myChart;
+              
+                // Function to initialize the chart
+                function initChart() {
+                  var ctx = document.getElementById("myChart").getContext("2d");
+                  var xValues = ["Accuracy", "Recall", "Precision", "F1_Score"];
+                  var yValues = [
+                    {{ model_details.accuracy|default:0 }},
+                    {{ model_details.recall|default:0 }},
+                    {{ model_details.precision|default:0 }},
+                    {{ model_details.f1_score|default:0 }}
+                  ];
+                  var barColors = [
+                    "rgba(185, 29, 71, 0.8)",
+                    "rgba(0, 171, 169, 0.8)",
+                    "rgba(43, 87, 151, 0.8)",
+                    "rgba(30, 113, 69, 0.8)"
+                  ];
+                  
+                  myChart = new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                      labels: xValues,
+                      datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                      }]
+                    },
+                  });
+                }
+                
+                document.getElementById("toggleMetrics").addEventListener("click", function() {
+                  var metricsContainer = document.getElementById("metricsContainer");
+                  if (metricsContainer.style.display === "none") {
+                    // Show the container
+                    metricsContainer.style.display = "block";
+                    this.textContent = "Hide Model Metrics";
+                    // Initialize the chart if it hasn't been created yet
+                    if (!myChart) {
+                      // Give the browser a moment to render the now-visible canvas
+                      setTimeout(initChart, 100);
+                    } else {
+                      // If the chart exists, resize/update it in case dimensions changed
+                      myChart.resize();
+                      myChart.update();
+                    }
+                  } else {
+                    // Hide the container
+                    metricsContainer.style.display = "none";
+                    this.textContent = "Show Model Metrics";
+                  }
+                });
+              </script>
+              
+              
+            
+            <!-- Result Cards Row -->
+            <div class="row text-center">
+              <!-- Predicted Crime Score Card with Precautions -->
+              <div class="col-md-4 mb-3">
+                <div class="card prediction-card prediction-score">
+                  <div class="card-header">Predicted Crime Score</div>
+                  <div class="card-body">
+                    <h2 class="card-title">{{ predicted_crime_score }}%</h2>
+                    {% if precaution_points %}
+                      <button id="togglePrecautions" class="toggle-btn" style="background-color: #2f72e6 !important;">Show Precautions</button>
+                      <div id="precautionsContainer" class="precautions">
+                        <h5>Travel Safety Precautions:</h5>
+                        <ul>
+                          {% for point in precaution_points %}
+                            <li>{{ point }}</li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Predicted Crime Domain Card with Emergency Contacts -->
+              <div class="col-md-4 mb-3">
+                <div class="card prediction-card prediction-domain">
+                  <div class="card-header">Predicted Crime Domain</div>
+                  <div class="card-body">
+                    <h2 class="card-title">{{ crime_domain }}</h2>
+                    {% if emergency_contacts %}
+                    <button id="toggleEmergency" class="toggle-btn" style="background-color: #e67e22 !important;">Show Emergency Contacts</button>
+                    <div id="emergencyContainer" class="legal-sections">
+                      <h5>Emergency Contacts:</h5>
+                      <ul>
+                        {% for contact in emergency_contacts %}
+                          <li>
+                            <a href="tel:{{ contact.number }}" style="color: #e74c3c; text-decoration: none;">
+                              {{ contact.service }}: {{ contact.number }}
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Crime Description Card with Legal Sections Toggle -->
+              <div class="col-md-4 mb-3">
+                <div class="card prediction-card prediction-description">
+                  <div class="card-header">Crime Description</div>
+                  <div class="card-body">
+                    <h2 class="card-title">{{ crime_description }}</h2>
+                    {% if legal_sections %}
+                      <button id="toggleLegal" class="toggle-btn" style="background-color: #f328d1 !important;">Show Legal Sections</button>
+                      <div id="legalContainer" class="legal-sections">
+                        <h5>Relevant Legal Sections:</h5>
+                        <ul>
+                          {% for section in legal_sections %}
+                            <li>{{ section }}</li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+        
+        <section class="map-section col-12 py-0 row container">
+            <!-- Bootstrap CSS CDN -->
+            <link 
+              rel="stylesheet" 
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+              integrity="sha384-MCw98/..." 
+              crossorigin="anonymous">
+            <!-- Leaflet CSS CDN -->
+            <link 
+              rel="stylesheet" 
+              href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.css" 
+              integrity="sha512-sZbQZ..." 
+              crossorigin="anonymous" 
+              referrerpolicy="no-referrer" />
+            
+            <style>
+              /* Inline styling for the map section */
+              #map {
+                height: 400px;
+                width: 100%;
+                border: 2px solid #007bff;
+                border-radius: 4px;
+              }
+            </style>
+            
+            <div class="container col-6" style="background: #fff; padding: 50px 30px; border: 1px solid #e0e0e0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+              <h3 class="mb-3">Your Searched Location</h3>
+              <!-- Added a text display for crime count -->
+              <p class="text-center" style="font-size: 16px; color: #555; margin-bottom: 20px;">
+                {{ city_count }} crimes detected in the area of {{ city_input }}.
+              </p>
+              <!-- The dynamic data is rendered by Django context variables -->
+              <div id="map" 
+                   data-lat="{{ latitude }}" 
+                   data-lon="{{ longitude }}" 
+                   data-city="{{ city_input }}" 
+                   data-locality="{{ locality_input }}"
+                   data-citycount="{{ city_count }}">
+              </div>
+            </div>
+            <div class="col-6 mx-auto" style="background: #fff; padding: 50px 30px; border: 1px solid #e0e0e0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+              <h2 class="text-center mb-4" style="color: #333; font-weight: 700; font-size: 28px;">Check Crime Reports on Your Route</h2>
+              <p class="text-center" style="font-size: 16px; color: #555; line-height: 1.6; margin-bottom: 30px;">
+                Select your starting and destination cities to check crime incidents along your chosen route.
+              </p>
+              
+              <form action="{% url 'check_crimes' %}" method="POST" class="d-flex flex-column align-items-center" style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: linear-gradient(135deg, #fdfbfb, #ebedee);">
+                {% csrf_token %}
+                
+                <div class="row mb-4 w-100" style="justify-content: center;">
+                  <!-- Starting City -->
+                  <div class="col-md-6 mb-3 mb-md-0">
+                    <label for="startCity" class="form-label" style="font-weight: 600; color: #444; display: block; text-align: center;">Starting City</label>
+                    <select id="startCity" name="startCity" class="form-select" style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; transition: border-color 0.3s ease; display: block; margin: 0 auto;" required>
+                      <option value="" disabled selected>--Select Starting City--</option>
+                      <option value="0">Agra</option>
+                      <option value="1">Ahmedabad</option>
+                      <option value="2">Bangalore</option>
+                      <option value="3">Bhopal</option>
+                      <option value="4">Chennai</option>
+                      <option value="5">Delhi</option>
+                      <option value="6">Faridabad</option>
+                      <option value="7">Ghaziabad</option>
+                      <option value="8">Hyderabad</option>
+                      <option value="9">Indore</option>
+                      <option value="10">Jaipur</option>
+                      <option value="11">Kalyan</option>
+                      <option value="12">Kanpur</option>
+                      <option value="13">Kolkata</option>
+                      <option value="14">Lucknow</option>
+                      <option value="15">Ludhiana</option>
+                      <option value="16">Meerut</option>
+                      <option value="17">Mumbai</option>
+                      <option value="18">Nagpur</option>
+                      <option value="19">Nashik</option>
+                      <option value="20">Patna</option>
+                      <option value="21">Pune</option>
+                      <option value="22">Rajkot</option>
+                      <option value="23">Srinagar</option>
+                      <option value="24">Surat</option>
+                      <option value="25">Thane</option>
+                      <option value="26">Varanasi</option>
+                      <option value="27">Vasai</option>
+                      <option value="28">Visakhapatnam</option>
+                    </select>
+                  </div>
+                  
+                  <!-- Destination City -->
+                  <div class="col-md-6">
+                    <label for="destCity" class="form-label" style="font-weight: 600; color: #444; display: block; text-align: center;">Destination City</label>
+                    <select id="destCity" name="destCity" class="form-select" style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; transition: border-color 0.3s ease; display: block; margin: 0 auto;" required>
+                      <option value="" disabled selected>--Select Destination City--</option>
+                      <option value="0">Agra</option>
+                      <option value="1">Ahmedabad</option>
+                      <option value="2">Bangalore</option>
+                      <option value="3">Bhopal</option>
+                      <option value="4">Chennai</option>
+                      <option value="5">Delhi</option>
+                      <option value="6">Faridabad</option>
+                      <option value="7">Ghaziabad</option>
+                      <option value="8">Hyderabad</option>
+                      <option value="9">Indore</option>
+                      <option value="10">Jaipur</option>
+                      <option value="11">Kalyan</option>
+                      <option value="12">Kanpur</option>
+                      <option value="13">Kolkata</option>
+                      <option value="14">Lucknow</option>
+                      <option value="15">Ludhiana</option>
+                      <option value="16">Meerut</option>
+                      <option value="17">Mumbai</option>
+                      <option value="18">Nagpur</option>
+                      <option value="19">Nashik</option>
+                      <option value="20">Patna</option>
+                      <option value="21">Pune</option>
+                      <option value="22">Rajkot</option>
+                      <option value="23">Srinagar</option>
+                      <option value="24">Surat</option>
+                      <option value="25">Thane</option>
+                      <option value="26">Varanasi</option>
+                      <option value="27">Vasai</option>
+                      <option value="28">Visakhapatnam</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="text-center w-100">
+                  <button type="submit" class="btn btn-danger" style="padding: 12px 30px; font-size: 18px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition: background-color 0.3s ease;">
+                    Check Crimes
+                  </button>
+                </div>
+              </form>
+            </div>
+            
+            <!-- Leaflet JS CDN -->
+            <script 
+              src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.js" 
+              integrity="sha512-XQoYM..." 
+              crossorigin="anonymous" 
+              referrerpolicy="no-referrer"></script>
+            <!-- Bootstrap JS and dependencies -->
+            <script 
+              src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
+              integrity="sha384-DfXdz2..." 
+              crossorigin="anonymous"></script>
+            <script 
+              src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js" 
+              integrity="sha384-LtrjvnR4Jut..." 
+              crossorigin="anonymous"></script>
+            
+            <script>
+              document.addEventListener("DOMContentLoaded", function() {
+                // Toggle Precautions
+                var togglePrecautions = document.getElementById("togglePrecautions");
+                var precautionsContainer = document.getElementById("precautionsContainer");
+                if (togglePrecautions && precautionsContainer) {
+                  togglePrecautions.addEventListener("click", function() {
+                    if (precautionsContainer.style.display === "none" || precautionsContainer.style.display === "") {
+                      precautionsContainer.style.display = "block";
+                      togglePrecautions.textContent = "Hide Precautions";
+                    } else {
+                      precautionsContainer.style.display = "none";
+                      togglePrecautions.textContent = "Show Precautions";
+                    }
+                  });
+                }
+                
+                // Toggle Legal Sections inside Crime Description Card
+                var toggleLegal = document.getElementById("toggleLegal");
+                var legalContainer = document.getElementById("legalContainer");
+                if (toggleLegal && legalContainer) {
+                  toggleLegal.addEventListener("click", function() {
+                    if (legalContainer.style.display === "none" || legalContainer.style.display === "") {
+                      legalContainer.style.display = "block";
+                      toggleLegal.textContent = "Hide Legal Sections";
+                    } else {
+                      legalContainer.style.display = "none";
+                      toggleLegal.textContent = "Show Legal Sections";
+                    }
+                  });
+                }
+                
+                // Toggle Emergency Contacts in Crime Domain Card
+                var toggleEmergency = document.getElementById("toggleEmergency");
+                var emergencyContainer = document.getElementById("emergencyContainer");
+                if (toggleEmergency && emergencyContainer) {
+                  toggleEmergency.addEventListener("click", function() {
+                    if (emergencyContainer.style.display === "none" || emergencyContainer.style.display === "") {
+                      emergencyContainer.style.display = "block";
+                      toggleEmergency.textContent = "Hide Emergency Contacts";
+                    } else {
+                      emergencyContainer.style.display = "none";
+                      toggleEmergency.textContent = "Show Emergency Contacts";
+                    }
+                  });
+                }
+                
+                // Map Initialization for Searched Location
+                var mapDiv = document.getElementById("map");
+                var cityLatitude = parseFloat(mapDiv.getAttribute("data-lat"));
+                var cityLongitude = parseFloat(mapDiv.getAttribute("data-lon"));
+                var cityName = mapDiv.getAttribute("data-city");
+                var localityName = mapDiv.getAttribute("data-locality");
+                var cityCount = mapDiv.getAttribute("data-citycount");
+                
+                var map = L.map('map').setView([cityLatitude, cityLongitude], 12);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
+                
+                L.marker([cityLatitude, cityLongitude]).addTo(map)
+                  .bindPopup("<b>City: " + cityName + "</b><br>Locality: " + localityName + "<br>" + cityCount + " crimes in this location")
+                  .openPopup();
+              });
+            </script>
+          </section>
+          
+      </main>
+      
+      <style>
+        /* Custom styling */
+        .prediction-result {
+          padding: 2rem 0;
+        }
+        .prediction-card {
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          border: none;
+          transition: transform 0.2s ease-in-out;
+        }
+        .prediction-card:hover {
+          transform: translateY(-5px);
+        }
+        .prediction-card .card-header {
+          font-size: 1.1rem;
+          font-weight: bold;
+          text-transform: uppercase;
+          padding: 0.75rem;
+        }
+        .prediction-card.prediction-score .card-header {
+          background-color: #ff7043;
+          color: #fff;
+        }
+        .prediction-card.prediction-domain .card-header {
+          background-color: #42a5f5;
+          color: #fff;
+        }
+        .prediction-card.prediction-description .card-header {
+          background-color: #66bb6a;
+          color: #fff;
+        }
+        .card-title {
+          font-size: 2rem;
+          margin: 0;
+          font-weight: bold;
+          color: #333;
+        }
+        .page-title.dark-background {
+          background-color: #263238;
+          color: #fff;
+        }
+        .heading.py-5 h1 {
+          margin: 0;
+          font-size: 2.5rem;
+        }
+        .toggle-btn {
+          margin: 1rem 0;
+          padding: 0.5rem 1rem;
+          background-color: #007bff;
+          border: none;
+          border-radius: 4px;
+          color: #fff;
+          cursor: pointer;
+          font-size: 0.9rem;
+          transition: background-color 0.3s ease;
+        }
+        .toggle-btn:hover {
+          background-color: #0056b3;
+        }
+        .precautions, .legal-sections {
+          margin-top: 1rem;
+          text-align: left;
+          background-color: #f8f9fa;
+          border-left: 4px solid #007bff;
+          padding: 1rem;
+          border-radius: 4px;
+          display: none;  /* Initially hidden */
+          animation: fadeIn 0.5s ease-in-out;
+        }
+        .precautions h5, .legal-sections h5 {
+          margin-bottom: 0.5rem;
+          font-size: 1.2rem;
+          color: #333;
+        }
+        .precautions ul, .legal-sections ul {
+          list-style-type: disc;
+          padding-left: 1.5rem;
+          margin-bottom: 0;
+        }
+        .precautions li, .legal-sections li {
+          margin-bottom: 0.5rem;
+          font-size: 0.95rem;
+          color: #555;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      </style>
+      
+      
+      
+      
+      
+      
+
+    <footer id="footer" class="footer dark-background">
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-12 footer-newsletter footer-about">
+                    <a href="{% url "user_dashboard" %}" class="logo d-flex align-items-center">
+                        <span class="sitename">Crime Detection</span>
+                    </a>
+                    <p>
+                        🔍 Empowering Security with Artificial Intelligence<br><br>
+                        Leveraging machine learning to detect, analyze, and prevent criminal activities in real-time. Our AI-driven solutions help law enforcement and security agencies make data-driven decisions for a safer society.
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-6 footer-links" style="padding-left: 120px;">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="{% url 'user_dashboard' %}">Dashboard</a></li>
+                        <li><a href="{% url 'detect' %}">Crime Detection</a></li>
+                        <li><a href="{% url 'profile' %}">Profile</a></li>
+                        <li><a href="{% url 'user_feedback' %}">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 footer-about footer-newsletter">
+                    <h4>Contact Information</h4>
+                    <div class="footer-contact pt-3">
+                        <p>
+
+                        </p>
+                        <p class="mt-3"><strong>Phone:</strong> <span></span></p>
+                        <p><strong>Email:</strong> <span>info@svist.ac.in</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-4">
+                        <a href=""><i class="bi bi-twitter-x"></i></a>
+                        <a href=""><i class="bi bi-facebook"></i></a>
+                        <a href=""><i class="bi bi-instagram"></i></a>
+                        <a href=""><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename"><a href="{% url 'home' %}">Crime Detection</a></strong> <span>All Rights Reserved</span></p>
+            <div class="credits">
+                Designed & Distributed By <a href="https://svist.ac.in/">svist.ac.in</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static "main/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "main/vendor/php-email-form/validate.js" %}"></script>
+    <script src="{% static "main/vendor/aos/aos.js" %}"></script>
+    <script src="{% static "main/vendor/glightbox/js/glightbox.min.js" %}"></script>
+    <script src="{% static "main/vendor/purecounter/purecounter_vanilla.js" %}"></script>
+    <script src="{% static "main/vendor/swiper/swiper-bundle.min.js" %}"></script>
+    <!-- Main JS File -->
+    <script src="{% static "main/js/main.js" %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <script>swal({
+                        title: "Success!",
+                        text: "{{message}}",
+                        icon: "success",
+                        button: "OK",
+                    });
+                </script>
+            
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                <script>swal({
+                        title: "Warning :)",
+                        text: "{{message}}",
+                        icon: "warning",
+                        button: "OK",
+                    
+                    });
+                </script>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                <script>swal({
+                        title: "info :)",
+                        text: "{{message}}",
+                        icon: "info",
+                        button: "OK",
+                    });
+                </script>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <script>swal({
+                        title: "error :)",
+                        text: "{{message}}",
+                        icon: "error",
+                        button: "OK",
+                    });
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

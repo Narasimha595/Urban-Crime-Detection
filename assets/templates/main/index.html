@@ -1,0 +1,205 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>home</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- Favicons -->
+    <link href="{% static "main/img/detective.png" %}" rel="icon">
+    <link href="{% static "main/img/detective.png" %}" rel="apple-touch-icon">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{% static "main/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/aos/aos.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/glightbox/css/glightbox.min.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/swiper/swiper-bundle.min.css" %}" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="{% static "main/css/main.css" %}" rel="stylesheet">
+</head>
+<body class="index-page">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+            <a href="{% url "home" %}" class="logo d-flex align-items-center">
+                <img src="{% static "main/img/detective.png" %}" alt="">
+                <h1 class="sitename">Crime Detection</h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url "home" %}" class="active">Home</a></li>
+                    <li><a href="{% url "about" %}">About Us</a></li>
+                    <li><a href="{% url "contact" %}">Contact Us</a></li>
+                    <li><a href="{% url "user" %}">User</a></li>
+                    <li><a href="{% url "main_admin" %}">Admin</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section id="hero" class="hero section dark-background">
+            <img src="{% static "main/img/home_img.jpg" %}" alt="" class="hero-bg">
+            <div class="container">
+                <div class="row gy-4 justify-content-between">
+                    <div class="col-lg-4 order-lg-last hero-img d-flex justify-content-center" data-aos="zoom-out" data-aos-delay="100">
+                        <img src="{% static "main/img/float1.png" %}" class="img-fluid animated" alt="" style="height: 300px; width: 500px;">
+                    </div>
+                    <div class="col-lg-6  d-flex flex-column justify-content-center" data-aos="fade-in">
+                        <h1>Crime Detection</h1>
+                        <p>Leveraging machine learning for real-time surveillance, anomaly detection, and predictive policing. From analyzing CCTV footage to identifying cyber threats, our technology enhances public safety and prevents crime before it happens.</p>
+                    </div>
+                </div>
+            </div>
+            <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+                <defs>
+                    <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+                </defs>
+                <g class="wave1">
+                    <use xlink:href="#wave-path" x="50" y="3"></use>
+                </g>
+                <g class="wave2">
+                    <use xlink:href="#wave-path" x="50" y="0"></use>
+                </g>
+                <g class="wave3">
+                    <use xlink:href="#wave-path" x="50" y="9"></use>
+                </g>
+            </svg>
+        </section><!-- /Hero Section -->
+
+        <!-- About Section -->
+        <section id="about" class="about section">
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="row align-items-xl-center gy-5">
+                    <div class="col-xl-5 content">
+                        <h3>About Us</h3>
+                        <h2>Who We Are</h2>
+                        <p>
+                            We are a team of AI researchers, data scientists, and security experts dedicated to revolutionizing crime detection through machine learning. Our platform leverages advanced algorithms to analyze crime data, detect suspicious patterns, and provide predictive insights to law enforcement agencies and security professionals.
+                        </p>
+                        <h2>Our Mission</h2>
+                        <p>
+                            To enhance public safety by integrating artificial intelligence and data-driven crime analysis, helping authorities prevent criminal activities before they happen.
+                        </p>
+                    </div>
+                    <div class="col-xl-7">
+                        <h2>How It Works</h2>
+                        <div class="row gy-4 icon-boxes">
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                                <div class="icon-box">
+                                    <img src="{% static "main/img/fraud.png" %}" alt="">
+                                    <h3>Data Collection</h3>
+                                    <p>
+                                        We gather data from various sources, including police records, surveillance footage, and online reports.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                                <div class="icon-box">
+                                    <img src="{% static "main/img/artificial-intelligence.png" %}" alt="">
+                                    <h3>Preprocessing</h3>
+                                    <p>
+                                        The data is cleaned, structured, and analyzed for meaningful patterns.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+                                <div class="icon-box">
+                                    <img src="{% static "main/img/24-hours.png" %}" alt="">
+                                    <h3>Machine Learning Analysis</h3>
+                                    <p>
+                                        AI models detect anomalies, predict threats, and classify criminal activities.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="500">
+                                <div class="icon-box">
+                                    <img src="{% static "main/img/user-friendly.png" %}" alt="">
+                                    <h3>Real-Time Alerts</h3>
+                                    <p>
+                                        Security agencies receive automated reports and alerts for quick response.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- /About Section -->
+    </main>
+
+    <footer id="footer" class="footer dark-background mt-5">
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-12 footer-newsletter footer-about">
+                    <a href="{% url "home" %}" class="logo d-flex align-items-center">
+                        <span class="sitename">Crime Detection</span>
+                    </a>
+                    <p>
+                        🔍 Empowering Security with Artificial Intelligence<br><br>
+                        Leveraging machine learning to detect, analyze, and prevent criminal activities in real-time. Our AI-driven solutions help law enforcement and security agencies make data-driven decisions for a safer society.
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-6 footer-links" style="padding-left: 120px;">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About us</a></li>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'user' %}">User</a></li>
+                        <li><a href="{% url 'main_admin' %}">Admin</a></li>
+                        <li><a href="{% url 'registration' %}">Registration</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 footer-about footer-newsletter">
+                    <h4>Contact Information</h4>
+                    <div class="footer-contact pt-3">
+                        <p>
+
+                        </p>
+                        <p class="mt-3"><strong>Phone:</strong> <span></span></p>
+                        <p><strong>Email:</strong> <span>info@svist.ac.in</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-4">
+                        <a href=""><i class="bi bi-twitter-x"></i></a>
+                        <a href=""><i class="bi bi-facebook"></i></a>
+                        <a href=""><i class="bi bi-instagram"></i></a>
+                        <a href=""><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename"><a href="{% url 'home' %}">Crime Detection</a></strong> <span>All Rights Reserved</span></p>
+            <div class="credits">
+                Designed & Distributed By <a href="https://svist.ac.in/">svist.ac.in</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static "main/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "main/vendor/php-email-form/validate.js" %}"></script>
+    <script src="{% static "main/vendor/aos/aos.js" %}"></script>
+    <script src="{% static "main/vendor/glightbox/js/glightbox.min.js" %}"></script>
+    <script src="{% static "main/vendor/purecounter/purecounter_vanilla.js" %}"></script>
+    <script src="{% static "main/vendor/swiper/swiper-bundle.min.js" %}"></script>
+    <!-- Main JS File -->
+    <script src="{% static "main/js/main.js" %}"></script>
+</body>
+</html>

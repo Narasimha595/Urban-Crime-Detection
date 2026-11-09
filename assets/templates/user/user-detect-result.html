@@ -1,0 +1,701 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>user detection result</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- Favicons -->
+    <link href="{% static "main/img/detective.png" %}" rel="icon">
+    <link href="{% static "main/img/detective.png" %}" rel="apple-touch-icon">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{% static "main/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/aos/aos.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/glightbox/css/glightbox.min.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/swiper/swiper-bundle.min.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- Main CSS File -->
+    <link href="{% static "main/css/main.css" %}" rel="stylesheet">
+    <style>
+        .list-group-item {
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .list-group-item.active {
+            background-color: #08005e;
+            border-color: #08005e;
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="index-page">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+            <a href="{% url "user_dashboard" %}" class="logo d-flex align-items-center">
+                <img src="{% static "main/img/detective.png" %}" alt="">
+                <h1 class="sitename">Crime Detection</h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url "user_dashboard" %}">Dashboard</a></li>
+                    <li><a href="{% url 'detection_new' %}" class="active">Crime Detection</a></li>
+                    <li><a href="{% url "profile" %}">Profile</a></li>
+                    <li><a href="{% url "user_feedback" %}">Feedback</a></li>
+                    <li><a href="{% url 'user' %}">Logout</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Page Title -->
+        <div class="page-title dark-background" data-aos="fade">
+            <div class="heading">
+                <div class="container">
+                    <div class="row d-flex text-center">
+                        <div class="col-lg-12">
+                            <img src="{% static 'main/img/breadcrum.jpg' %}" alt="" style="width: 100%; height: 250px; display: block; margin: 0 auto;margin-top: 25px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav class="breadcrumbs">
+                <div class="container">
+                    <ol>
+                        <li><a href="{% url "user_dashboard" %}">Home</a></li>
+                        <li class="current">User Detection Result</li>
+                    </ol>
+                </div>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <!-- Starter Section Section -->
+        <section id="starter-section" class="starter-section section">
+            <!-- Team Section -->
+            <section id="team" class="team section" style="margin-top: -60px; margin-bottom: -50px;">
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>User</h2>
+                    <div><span class="description-title">User Crime Detection Result</span></div>
+                </div>
+                <div class="container" style="text-align:center;" data-aos="fade-up">
+                   <!-- Container for heading + cards -->
+<div class="container py-4">
+    <!-- Heading Row -->
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="fw-bold" style="color: #222; font-size: 2em;">
+          Crime Detection:
+          <span style="color: red; font-size: 1.3em;">
+            {% if prediction_result == 3 %}
+              Violent Crime
+            {% elif prediction_result == 1 %}
+              Other Crime
+            {% elif prediction_result == 2 %}
+              Traffic Fatality
+            {% elif prediction_result == 0 %}
+              Fire Accident
+            {% else %}
+              Not Predicted
+            {% endif %}
+          </span>
+        </h1>
+      </div>
+    </div>
+  
+    <!-- Row for Two Cards -->
+    <!-- g-4 adds a nice gap between columns, align-items-stretch makes both cards match height -->
+    <div class="row g-4 align-items-stretch mt-2">
+      <!-- Left Card: Legal Issues -->
+      <div class="col-md-6 d-flex">
+        <div class="card shadow-lg flex-fill"
+             style="padding: 20px; border-radius: 15px; 
+                    background: linear-gradient(to right, #ffffff, #f8f9fa);
+                    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);">
+          
+          {% if prediction_result is not None %}
+            <p style="font-size: 1.4em; font-weight: bold; color: #444; text-decoration: underline; margin-bottom: 10px;">
+              Legal Issues in India:
+            </p>
+            <ul style="list-style-type: none; text-align: left; padding-left: 0; margin: 0 auto;">
+              {% if prediction_result == 3 %}
+                <!-- Violent Crime -->
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 299 &amp; 300:</b> Culpable homicide and murder.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 307:</b> Attempt to murder.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 323:</b> Voluntarily causing hurt.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 326:</b> Grievous hurt.
+                </li>
+              {% elif prediction_result == 1 %}
+                <!-- Other Crime -->
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 378:</b> Theft.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 379:</b> Punishment for theft.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 392:</b> Robbery.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 411:</b> Receiving stolen property.
+                </li>
+              {% elif prediction_result == 2 %}
+                <!-- Traffic Fatality -->
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 304A:</b> Causing death by negligence.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>Motor Vehicles Act, 1988:</b> Punishment for rash driving.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 279:</b> Rash driving.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 337:</b> Causing hurt by act endangering life.
+                </li>
+              {% elif prediction_result == 0 %}
+                <!-- Fire Accident -->
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>National Building Code of India:</b> Fire safety regulations.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>The Factories Act, 1948:</b> Fire safety norms.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 304A:</b> Causing death by negligence (if applicable).
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>Local Fire Safety Regulations</b>
+                </li>
+              {% else %}
+                <!-- Not Predicted or Default -->
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 268:</b> Public nuisance.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 295A:</b> Outraging religious sentiments.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 509:</b> Insulting the modesty of a woman.
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid red;">
+                  <b>IPC Section 171E:</b> Bribery and corruption.
+                </li>
+              {% endif %}
+            </ul>
+          {% else %}
+            <p style="text-align: center; font-size: 1.3em; color: red; font-weight: bold;">
+              No prediction available.
+            </p>
+          {% endif %}
+        </div>
+      </div>
+  
+      <!-- Right Card: Emergency Numbers -->
+      <div class="col-md-6 d-flex">
+        <div class="card shadow-lg flex-fill"
+             style="padding: 20px; border-radius: 15px; 
+                    background: linear-gradient(to right, #ffffff, #f8f9fa);
+                    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);">
+          <h2 class="fw-bold text-center mb-3" style="color: #222; font-size: 1.8em;">
+            Emergency Numbers
+          </h2>
+          <div class="row">
+            <div class="col-6">
+              <ul style="list-style-type: none; padding-left: 0; margin: 0;">
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid blue;">
+                  <b>Police:</b> 100 or 112
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid blue;">
+                  <b>Fire Brigade:</b> 101
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid blue;">
+                  <b>Ambulance:</b> 102
+                </li>
+              </ul>
+            </div>
+            <div class="col-6">
+              <ul style="list-style-type: none; padding-left: 0;">
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid blue;">
+                  <b>Women Helpline:</b> 1091
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid blue;">
+                  <b>Child Helpline:</b> 1098
+                </li>
+                <li style="font-size: 1.2em; color: #333; padding: 8px; border-left: 5px solid blue;">
+                  <b>Disaster Management:</b> 108
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+                    
+                    
+                    <div class="row mt-5" >
+                        <div class="col-md-7">
+                            <div class="row justify-content-center flex-grow-1 mt-1"style="height: 340px;">
+                                {% if prediction_result == 3 %}
+                                <div class="alert alert-danger custom-alert text-center shadow-lg p-3 mb-5 rounded d-flex flex-column justify-content-center" role="alert">
+                                    <img src="{% static 'main/img/0 (7).jpg' %}" alt="Crime is Detected" class="img-fluid mb-2" style="height: 200px;">
+                                    <span class="badge bg-danger">
+                                        <h4 class="text-white">Warning</h4>
+                                    </span>
+                                </div>
+                                {% elif prediction_result == 2 %}
+                                <div class="alert alert-danger custom-alert text-center shadow-lg p-3 mb-5 rounded d-flex flex-column justify-content-center" role="alert">
+                                    <img src="{% static 'main/img/0 (6).jpg' %}" alt="Crime is Detected" class="img-fluid mb-2" style="height: 200px;">
+                                    <span class="badge bg-danger">
+                                        <h4 class="text-white">Warning</h4>
+                                    </span>
+                                </div>
+                                {% elif prediction_result == 1 %}
+                                <div class="alert alert-danger custom-alert text-center shadow-lg p-3 mb-5 rounded d-flex flex-column justify-content-center" role="alert">
+                                    <img src="{% static 'main/img/0 (4).jpg' %}" alt="Crime is Detected" class="img-fluid mb-2" style="height: 200px;">
+                                    <span class="badge bg-danger">
+                                        <h4 class="text-white">Warning</h4>
+                                    </span>
+                                </div>
+                               
+                                {% elif prediction_result == 0 %}
+                                <div class="alert alert-danger custom-alert text-center shadow-lg p-3 mb-5 rounded d-flex flex-column justify-content-center" role="alert">
+                                    <img src="{% static 'main/img/0 (2).jpg' %}" alt="Crime is Detected" class="img-fluid mb-2" style="height: 200px;">
+                                    <span class="badge bg-danger">
+                                        <h4 class="text-white">Warning</h4>
+                                    </span>
+                                </div>
+                                {% else %}
+                                <div class="alert alert-danger custom-alert text-center shadow-lg p-3 mb-5 rounded d-flex flex-column justify-content-center" role="alert">
+                                    <img src="{% static 'main/img/0 (1).jpg' %}" alt="Crime is Detected" class="img-fluid mb-2" style="height: 200px;">
+                                    <span class="badge bg-danger">
+                                        <h4 class="text-white">Warning</h4>
+                                    </span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="card shadow-lg">
+                                <h2 class="mt-4">Prediction Result:</h2>
+                                {% if prediction_result is not None %}
+                                    {% if prediction_result == 4 %}
+                                        <p style="color:red; font-weight:bold; font-size:1.5em;">Crime is detected.</p>
+                                    {% elif prediction_result == 5 %}
+                                        <p style="color:red; font-weight:bold; font-size:1.5em;">Crime is detected.</p>
+                                    {% elif prediction_result == 1 %}
+                                        <p style="color:red; font-weight:bold; font-size:1.5em;">Crime is detected.</p>
+                                    {% elif prediction_result == 2 %}
+                                        <p style="color:red; font-weight:bold; font-size:1.5em;">Crime is detected.</p>
+                                    {% elif prediction_result == 0 %}
+                                        <p style="color:red; font-weight:bold; font-size:1.5em;">Crime is detected.</p>
+                                    {% else %}
+                                        <p style="color:red; font-weight:bold; font-size:1.5em;">Crime is detected.</p>
+                                    {% endif %}
+                                {% else %}
+                                    <p>No prediction available.</p>
+                                {% endif %}
+                                <h2>Algorithm:</h2>
+                                <p style="font-weight:bold; font-size:1.5em;">Decision Tree Algorithm</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-5 hover-container">
+                            <style>
+                                #mapid { height: 500px; }
+                              </style>
+                              <div id="mapid"></div>
+                              
+                              <!-- Leaflet JS -->
+                              <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+                              <script>
+                                // Mapping of city names to their coordinates (latitude, longitude)
+                                var cityCoordinates = {
+                                  "Delhi": [28.7041, 77.1025],
+                                  "Mumbai": [19.0760, 72.8777],
+                                  "Bangalore": [12.9716, 77.5946],
+                                  "Hyderabad": [17.3850, 78.4867],
+                                  "Kolkata": [22.5726, 88.3639],
+                                  "Chennai": [13.0827, 80.2707],
+                                  "Pune": [18.5204, 73.8567],
+                                  "Ahmedabad": [23.0225, 72.5714],
+                                  "Jaipur": [26.9124, 75.7873],
+                                  "Lucknow": [26.8467, 80.9462],
+                                  "Kanpur": [26.4499, 80.3319],
+                                  "Surat": [21.1702, 72.8311],
+                                  "Nagpur": [21.1458, 79.0882],
+                                  "Agra": [27.1767, 78.0081],
+                                  "Ludhiana": [30.9010, 75.8573],
+                                  "Visakhapatnam": [17.6868, 83.2185],
+                                  "Thane": [19.2183, 72.9781],
+                                  "Ghaziabad": [28.6692, 77.4538],
+                                  "Indore": [22.7196, 75.8577],
+                                  "Patna": [25.5941, 85.1376],
+                                  "Bhopal": [23.2599, 77.4126],
+                                  "Meerut": [28.9845, 77.7064],
+                                  "Srinagar": [34.0837, 74.7973],
+                                  "Nashik": [20.0110, 73.7903],
+                                  "Vasai": [19.3910, 72.8397],
+                                  "Varanasi": [25.3176, 82.9739],
+                                  "Kalyan": [19.2500, 73.1600],
+                                  "Faridabad": [28.4089, 77.3178],
+                                  "Rajkot": [22.3039, 70.8022]
+                                };
+                              
+                                // Retrieve the city name and crime count passed from the view
+                                var cityName = "{{ request.session.city_name }}";
+                                var crimeCount = "{{ request.session.crime_count }}";
+                              
+                                // Set the map view to the center of India with a lower zoom level (e.g., zoom level 5)
+                                var map = L.map('mapid').setView([20.5937, 78.9629], 5);
+                              
+                                // Add the OpenStreetMap tiles
+                                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                  attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+                                }).addTo(map);
+                              
+                                // Check if the selected city has defined coordinates, then add marker and circle for it
+                                if (cityCoordinates[cityName]) {
+                                  var selectedCoordinates = cityCoordinates[cityName];
+                              
+                                  // Add a marker with a popup showing the crime count
+                                  L.marker(selectedCoordinates).addTo(map)
+                                    .bindPopup(cityName + ": " + crimeCount + " crimes")
+                                    .openPopup();
+                              
+                                  // Draw a circle to visually represent the hotspot intensity
+                                  L.circle(selectedCoordinates, {
+                                    color: 'red',
+                                    fillColor: '#f03',
+                                    fillOpacity: 0.5,
+                                    radius: crimeCount * 10  // Adjust the multiplier as needed for better visualization
+                                  }).addTo(map);
+                                }
+                              </script>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row m-4 d-flex align-items-stretch" align="center" style="gap: 80px;">
+                        <div class="col-md-5 card d-flex flex-column" style="height: 400px;margin-left: 80px;">
+                            <h3 class="card-title text-center mt-3 mb-3" style="font-size: 40px; color: #0056b3;">Prediction Graph</h3>
+                            <canvas id="myChart" style="width:100%; height: 300px;" class="m-auto mb-3 shadow-lg bg-white p-4 rounded"></canvas>
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                            <script>
+                                var xValues = ["Accuracy", "Recall", "Precision", "F1_Score"];
+                                var yValues = [{{ model_details.accuracy|default:0 }}, {{ model_details.recall|default:0 }}, {{ model_details.precision|default:0 }}, {{ model_details.f1_score|default:0 }}];
+                                var barColors = [
+                                    "rgba(185, 29, 71, 0.8)",
+                                    "rgba(0, 171, 169, 0.8)",
+                                    "rgba(43, 87, 151, 0.8)",
+                                    "rgba(30, 113, 69, 0.8)",
+                                ];
+                                new Chart("myChart", {
+                                    type: "bar",
+                                    data: {
+                                        labels: xValues,
+                                        datasets: [{
+                                            backgroundColor: barColors,
+                                            data: yValues
+                                        }]
+                                    },
+                                });
+                            </script>
+                        </div>
+                        <div class="col-md-5 hover-container d-flex flex-column justify-content-center">
+                            <div class="details-container card shadow-lg">
+                                <div class="card-header">
+                                    <h2>Model Details</h2>
+                                </div>
+                                <br>
+                                {% if model_details %}
+                                    <table class="" style="width:100%; font-size:1.2em; font-weight:bold; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="padding: 8px; padding-left: 30px; border-bottom: 1px solid #ddd;"><strong>Accuracy:</strong></td>
+                                            <td style="padding: 8px; border-bottom: 1px solid #ddd;">{{ model_details.accuracy }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px; padding-left: 30px; border-bottom: 1px solid #ddd;"><strong>Precision:</strong></td>
+                                            <td style="padding: 8px; border-bottom: 1px solid #ddd;">{{ model_details.precision }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px; padding-left: 30px; border-bottom: 1px solid #ddd;"><strong>F1 Score:</strong></td>
+                                            <td style="padding: 8px; border-bottom: 1px solid #ddd;">{{ model_details.f1_score }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px; padding-left: 30px; border-bottom: 1px solid #ddd;"><strong>Recall:</strong></td>
+                                            <td style="padding: 8px; border-bottom: 1px solid #ddd;">{{ model_details.recall }}</td>
+                                        </tr>
+                                    </table>
+                                {% else %}
+                                    <p>No model details available.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12 hover-container card shadow-lg">
+                            {% if prediction_result is not None %}
+                                {% if prediction_result == 4 %}
+                                    <div class="card-header">
+                                        <h4>Strategies for Property Crimes:</h4>
+                                    </div>
+                                    <br>
+                                    <p>Preventing property crimes requires a mix of strong security measures, community awareness, and law enforcement collaboration. Installing surveillance cameras, using smart locks, and improving lighting can deter criminals. Neighborhood watch programs and police patrols enhance safety, while legal actions and forensic investigations help track offenders. Strengthening cybersecurity also protects against digital property crimes like fraud and identity theft.</p>
+                                {% elif prediction_result == 5 %}
+                                    <div class="card-header">
+                                        <h4>Strategies for Violent Crimes:</h4>
+                                    </div>
+                                    <br>
+                                    <p>Preventing violent crimes requires a combination of law enforcement, community engagement, and social programs. Increasing police presence, promoting conflict resolution programs, and improving street lighting can help deter crime. Community policing and neighborhood watch programs encourage cooperation between residents and authorities. Addressing root causes like poverty, substance abuse, and mental health issues through education and rehabilitation can reduce violent crime rates in the long run.</p>
+                                {% elif prediction_result == 1 %}
+                                    <div class="card-header">
+                                        <h4>Strategies for Crimes against Public Order:</h4>
+                                    </div>
+                                    <br>
+                                    <p>Preventing crimes against public order requires a mix of law enforcement, public awareness, and policy measures. Increasing police patrols, enforcing strict regulations, and using surveillance in high-risk areas can deter offenses like rioting, vandalism, and illegal protests. Community engagement programs, education campaigns, and conflict resolution initiatives help promote lawful behavior. Strengthening legal frameworks and ensuring fair enforcement further maintain social stability and public safety.</p>
+                                {% elif prediction_result == 2 %}
+                                    <div class="card-header">
+                                        <h4>Strategies for Fraud and White-Collar Crimes:</h4>
+                                    </div>
+                                    <br>
+                                    <p>Preventing fraud and white-collar crimes requires strong legal regulations, corporate transparency, and advanced security measures. Businesses should implement strict financial audits, cybersecurity protocols, and employee training to detect and prevent fraud. Law enforcement agencies must enhance digital forensics, enforce anti-fraud laws, and promote whistleblower protections. Public awareness campaigns and financial literacy programs can also help individuals recognize and avoid scams.</p>
+                                {% elif prediction_result == 0 %}
+                                    <div class="card-header">
+                                        <h4>Strategies for Crimes against Persons:</h4>
+                                    </div>
+                                    <br>
+                                    <p>Preventing crimes against persons, such as assault, kidnapping, and domestic violence, requires a combination of law enforcement, community support, and legal protections. Strengthening policing, improving emergency response systems, and enforcing strict legal penalties deter offenders. Public awareness campaigns, self-defense training, and victim support services empower individuals to stay safe. Addressing root causes like substance abuse, mental health issues, and social inequality through education and rehabilitation can further reduce such crimes.</p>
+                                {% else %}
+                                    <div class="card-header">
+                                        <h4>Strategies for Other Crimes:</h4>
+                                    </div>
+                                    <br>
+                                    <p>Preventing various other crimes requires a multi-layered approach, including law enforcement, community awareness, and technological advancements. Strengthening surveillance, enforcing strict penalties, and enhancing forensic investigations help deter offenders. Public education campaigns, cybersecurity measures, and crime reporting hotlines encourage proactive prevention. Addressing underlying social and economic factors through rehabilitation programs and legal reforms further reduces criminal activities.</p>
+                                {% endif %}
+                            {% else %}
+                                <p>No prediction available.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </section><!-- /Team Section -->
+        </section>
+        <!-- /Starter Section Section -->
+
+        <div class="container" style="max-width: 900px; margin: auto; padding: 20px;">
+            <h2 class="text-center mb-4" style="color: #333;">Check Crime Reports on Your Route</h2>
+            <p class="text-center" style="font-size: 16px; color: #555;">
+              Select your starting and destination cities to check crime incidents that have occurred between your chosen route.
+            </p>
+          
+            <form action="{% url 'check_crimes' %}" method="POST" style="padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #fff;">
+              {% csrf_token %}
+              
+              <div class="row mb-3">
+                <!-- Starting City -->
+                <div class="col-md-6">
+                  <label for="startCity" class="form-label">Starting City</label>
+                  <select id="startCity" name="startCity" class="form-select" required>
+                    <option value="" disabled selected>--Select Starting City--</option>
+                    <option value="0">Agra</option>
+                    <option value="1">Ahmedabad</option>
+                    <option value="2">Bangalore</option>
+                    <option value="3">Bhopal</option>
+                    <option value="4">Chennai</option>
+                    <option value="5">Delhi</option>
+                    <option value="6">Faridabad</option>
+                    <option value="7">Ghaziabad</option>
+                    <option value="8">Hyderabad</option>
+                    <option value="9">Indore</option>
+                    <option value="10">Jaipur</option>
+                    <option value="11">Kalyan</option>
+                    <option value="12">Kanpur</option>
+                    <option value="13">Kolkata</option>
+                    <option value="14">Lucknow</option>
+                    <option value="15">Ludhiana</option>
+                    <option value="16">Meerut</option>
+                    <option value="17">Mumbai</option>
+                    <option value="18">Nagpur</option>
+                    <option value="19">Nashik</option>
+                    <option value="20">Patna</option>
+                    <option value="21">Pune</option>
+                    <option value="22">Rajkot</option>
+                    <option value="23">Srinagar</option>
+                    <option value="24">Surat</option>
+                    <option value="25">Thane</option>
+                    <option value="26">Varanasi</option>
+                    <option value="27">Vasai</option>
+                    <option value="28">Visakhapatnam</option>
+                  </select>
+                </div>
+          
+                <!-- Destination City -->
+                <div class="col-md-6">
+                  <label for="destCity" class="form-label">Destination City</label>
+                  <select id="destCity" name="destCity" class="form-select" required>
+                    <option value="" disabled selected>--Select Destination City--</option>
+                    <option value="0">Agra</option>
+                    <option value="1">Ahmedabad</option>
+                    <option value="2">Bangalore</option>
+                    <option value="3">Bhopal</option>
+                    <option value="4">Chennai</option>
+                    <option value="5">Delhi</option>
+                    <option value="6">Faridabad</option>
+                    <option value="7">Ghaziabad</option>
+                    <option value="8">Hyderabad</option>
+                    <option value="9">Indore</option>
+                    <option value="10">Jaipur</option>
+                    <option value="11">Kalyan</option>
+                    <option value="12">Kanpur</option>
+                    <option value="13">Kolkata</option>
+                    <option value="14">Lucknow</option>
+                    <option value="15">Ludhiana</option>
+                    <option value="16">Meerut</option>
+                    <option value="17">Mumbai</option>
+                    <option value="18">Nagpur</option>
+                    <option value="19">Nashik</option>
+                    <option value="20">Patna</option>
+                    <option value="21">Pune</option>
+                    <option value="22">Rajkot</option>
+                    <option value="23">Srinagar</option>
+                    <option value="24">Surat</option>
+                    <option value="25">Thane</option>
+                    <option value="26">Varanasi</option>
+                    <option value="27">Vasai</option>
+                    <option value="28">Visakhapatnam</option>
+                  </select>
+                </div>
+              </div>
+          
+              <!-- Submit Button -->
+              <div class="text-center">
+                <button type="submit" class="btn btn-danger" style="padding: 10px 20px; font-size: 18px;">Check Crimes</button>
+              </div>
+              
+            </form>
+          </div>
+          
+    </main>
+
+    <footer id="footer" class="footer dark-background">
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-12 footer-newsletter footer-about">
+                    <a href="{% url "user_dashboard" %}" class="logo d-flex align-items-center">
+                        <span class="sitename">Crime Detection</span>
+                    </a>
+                    <p>
+                        🔍 Empowering Security with Artificial Intelligence<br><br>
+                        Leveraging machine learning to detect, analyze, and prevent criminal activities in real-time. Our AI-driven solutions help law enforcement and security agencies make data-driven decisions for a safer society.
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-6 footer-links" style="padding-left: 120px;">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="{% url 'user_dashboard' %}">Dashboard</a></li>
+                        <li><a href="{% url 'detect' %}">Crime Detection</a></li>
+                        <li><a href="{% url 'profile' %}">Profile</a></li>
+                        <li><a href="{% url 'user_feedback' %}">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 footer-about footer-newsletter">
+                    <h4>Contact Information</h4>
+                    <div class="footer-contact pt-3">
+                        <p>
+
+                        </p>
+                        <p class="mt-3"><strong>Phone:</strong> <span></span></p>
+                        <p><strong>Email:</strong> <span>info@svist.ac.in</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-4">
+                        <a href=""><i class="bi bi-twitter-x"></i></a>
+                        <a href=""><i class="bi bi-facebook"></i></a>
+                        <a href=""><i class="bi bi-instagram"></i></a>
+                        <a href=""><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename"><a href="{% url 'home' %}">Crime Detection</a></strong> <span>All Rights Reserved</span></p>
+            <div class="credits">
+                Designed & Distributed By <a href="https://svist.ac.in/">svist.ac.in</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static "main/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "main/vendor/php-email-form/validate.js" %}"></script>
+    <script src="{% static "main/vendor/aos/aos.js" %}"></script>
+    <script src="{% static "main/vendor/glightbox/js/glightbox.min.js" %}"></script>
+    <script src="{% static "main/vendor/purecounter/purecounter_vanilla.js" %}"></script>
+    <script src="{% static "main/vendor/swiper/swiper-bundle.min.js" %}"></script>
+    <!-- Main JS File -->
+    <script src="{% static "main/js/main.js" %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <script>swal({
+                        title: "Success!",
+                        text: "{{message}}",
+                        icon: "success",
+                        button: "OK",
+                    });
+                </script>
+            
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                <script>swal({
+                        title: "Warning :)",
+                        text: "{{message}}",
+                        icon: "warning",
+                        button: "OK",
+                    
+                    });
+                </script>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                <script>swal({
+                        title: "info :)",
+                        text: "{{message}}",
+                        icon: "info",
+                        button: "OK",
+                    });
+                </script>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <script>swal({
+                        title: "error :)",
+                        text: "{{message}}",
+                        icon: "error",
+                        button: "OK",
+                    });
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,289 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="{% static 'admin/img/detective.png' %}" />
+
+	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
+
+	<title>admin logistic algorithm</title>
+
+	<link href="{% static 'admin/css/app.css' %}" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<script src="{% static 'admin/js/app.js' %}"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="{% url 'admin_dashboard' %}">
+					<img src="{% static 'admin/img/detective.png' %}" style="max-height: 30px;">
+					<span class="align-middle">Crime Detection</span>
+				</a>
+				<ul class="sidebar-nav">
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="{% url 'admin_dashboard' %}">
+							<i class="bi bi-house-door"></i>
+							<span class="align-middle">Dashboard</span>
+						</a>
+					</li>
+					<!-- Profile Dropdown Menu -->
+					<li class="sidebar-item">
+						<a class="sidebar-link" data-bs-toggle="collapse" href="#userDropdown" role="button" aria-expanded="false" aria-controls="userDropdown">
+							<i class="bi bi-person-vcard-fill"></i> 
+							<span class="align-middle">User Management</span>
+							<i class="bi bi-chevron-down" style="padding-left: 10px;"></i>
+						</a>
+						<ul class="collapse sidebar-dropdown" id="userDropdown">
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'pending_users' %}">
+									<span class="align-middle">Pending Users</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'all_users' %}">
+									<span class="align-middle">All Users</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="sidebar-item"></li>
+						<a class="sidebar-link" data-bs-toggle="collapse" href="#datasetDropdown" role="button" aria-expanded="false" aria-controls="datasetDropdown">
+							<i class="bi bi-clipboard-data"></i> 
+							<span class="align-middle">Dataset</span>
+							<i class="bi bi-chevron-down" style="padding-left: 80px;"></i>
+						</a>
+						<ul class="collapse sidebar-dropdown" id="datasetDropdown">
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'admin_upload' %}">
+									<span class="align-middle">Upload Dataset</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'admin_view' %}">
+									<span class="align-middle">View Dataset</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="sidebar-item"></li>
+						<a class="sidebar-link" data-bs-toggle="collapse" href="#algorithmDropdown" role="button" aria-expanded="false" aria-controls="algorithmDropdown">
+							<i class="bi bi-sliders2"></i>
+							<span class="align-middle">Algorithm</span>
+							<i class="bi bi-chevron-down" style="padding-left: 65px;"></i>
+						</a>
+						<ul class="collapse show sidebar-dropdown" id="algorithmDropdown">
+							<li class="sidebar-item active">
+								<a class="sidebar-link" href="{% url 'admin_Logistic_algo' %}">
+									<span class="align-middle">Logistic Algorithm</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'admin_Randomforest_algo' %}">
+									<span class="align-middle">Adaptive Region Partitioning (ARP) Algorithm</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'admin_dt_algo' %}">
+									<span class="align-middle">Decision Tree Algorithm</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'admin_lightgbm' %}">
+									<span class="align-middle">Light GBM</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'admin_ada' %}">
+									<span class="align-middle">Ada Boost</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'admin_ann' %}">
+									<span class="align-middle">Ann</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					
+					<li class="sidebar-item"></li>
+						<a class="sidebar-link" data-bs-toggle="collapse" href="#graphDropdown" role="button" aria-expanded="false" aria-controls="graphDropdown">
+							<i class="bi bi-graph-up"></i> 
+							<span class="align-middle">Graph Analysis</span>
+							<i class="bi bi-chevron-down" style="padding-left: 25px;"></i>
+						</a>
+						<ul class="collapse sidebar-dropdown" id="graphDropdown">
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'graph' %}">
+									<span class="align-middle">Graph</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="sidebar-item"></li>
+						<a class="sidebar-link" data-bs-toggle="collapse" href="#feedbackDropdown" role="button" aria-expanded="false" aria-controls="feedbackDropdown">
+							<i class="bi bi-chat-square-text"></i> 
+							<span class="align-middle">Feedback</span>
+							<i class="bi bi-chevron-down" style="padding-left: 58px;"></i>
+						</a>
+						<ul class="collapse sidebar-dropdown" id="feedbackDropdown">
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'Feedback' %}">
+									<span class="align-middle">Feedback</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'feedback_sentiment' %}">
+									<span class="align-middle">Sentiment Analysis</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="{% url 'feedback_graph' %}">
+									<span class="align-middle">Feedback Graph</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+          			<i class="hamburger align-self-center"></i>
+        		</a>
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                				<i class="align-middle" data-feather="settings"></i>
+              				</a>
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                				<img src="{% static "admin/img/face.jpg" %}" class="avatar img-fluid rounded me-1" alt="Hi, Admin" /> <span class="text-dark">Hi, Admin</span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="{% url 'main_admin' %}">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+					<h1 class="h3 mb-3">Algorithms</h1>
+					<div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
+                                        Logistic Algorithm
+                                        <a href="{% url 'logistic_btn' %}"><button class="btn text-white" style="background-color: #003a66;">Run Algorithm</button></a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name of the Algorithm</th>
+                                                <th scope="col">Accuracy</th>
+                                                <th scope="col">Precession</th>
+                                                <th scope="col">F1 Score</th>
+                                                <th scope="col">Recall</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+											{% if model_result %}
+                                            <tr>
+                                                <td>{{ model_result.Name }}</td>
+                                                <td>{{ model_result.Accuracy }}</td>
+                                                <td>{{ model_result.Precession }}</td>
+                                                <td>{{ model_result.F1_Score }}</td>
+                                                <td>{{ model_result.Recall }}</td>
+                                            </tr>
+											{% else %}
+											<tr>
+												<td colspan="5">No model results available.</td>
+											</tr>
+											{% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+			</main>
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<p class="mb-0">
+								© 2024 <a class="text-muted" href="https://svist.ac.in/" target="_blank"><strong>svist.ac.in</strong></a>
+							</p>
+						</div>
+						<div class="col-6 text-end">
+							<p class="mb-0"></p>
+								Powered by svist | All rights reserved.
+							</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <script>swal({
+                        title: "Success!",
+                        text: "{{message}}",
+                        icon: "success",
+                        button: "OK",
+                    });
+                </script>
+            
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                <script>swal({
+                        title: "Warning :)",
+                        text: "{{message}}",
+                        icon: "warning",
+                        button: "OK",
+                    
+                    });
+                </script>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                <script>swal({
+                        title: "info :)",
+                        text: "{{message}}",
+                        icon: "info",
+                        button: "OK",
+                    });
+                </script>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <script>swal({
+                        title: "error :)",
+                        text: "{{message}}",
+                        icon: "error",
+                        button: "OK",
+                    });
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,411 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>user detection</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- Favicons -->
+    <link href="{% static "main/img/detective.png" %}" rel="icon">
+    <link href="{% static "main/img/detective.png" %}" rel="apple-touch-icon">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{% static "main/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/aos/aos.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/glightbox/css/glightbox.min.css" %}" rel="stylesheet">
+    <link href="{% static "main/vendor/swiper/swiper-bundle.min.css" %}" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="{% static "main/css/main.css" %}" rel="stylesheet">
+</head>
+<body class="index-page">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+            <a href="{% url "user_dashboard" %}" class="logo d-flex align-items-center">
+                <img src="{% static "main/img/detective.png" %}" alt="">
+                <h1 class="sitename">Crime Detection</h1>
+            </a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url "user_dashboard" %}">Dashboard</a></li>
+                    <li><a href="{% url 'detection_new' %}" class="active">Crime Detection</a></li>
+                    <li><a href="{% url "profile" %}">Profile</a></li>
+                    <li><a href="{% url "user_feedback" %}">Feedback</a></li>
+                    <li><a href="{% url 'user' %}">Logout</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="page-title dark-background" data-aos="fade">
+            <div class="heading py-5">
+                
+            </div>
+           
+        </div><!-- End Page Title -->
+
+        <!-- Starter Section Section -->
+        <section id="starter-section" class="starter-section section">
+            <!-- Team Section -->
+            <section id="team" class="team section py-0" style="">
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>User</h2>
+                    <div><span class="description-title">User Crime Detection</span></div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5 col-xl-5 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                                <div>
+                                    <video autoplay loop muted class="rounded shadow-lg" style="">
+                                        <source src="{% static 'main/img/v2.mp4' %}" type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                      </video>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7 wow fadeInUp" data-wow-delay="0.1s">
+                            <form method="post" enctype="multipart/form-data" action="{% url 'process_detection' %}">
+                                {% csrf_token %}
+                                <div class="row g-4">
+                                    <!-- Report Number -->
+                                   
+                                    
+                                    <!-- City (29 options) -->
+                                    <div class="col-lg-12 col-xl-6">
+                                        <div class="form-floating">
+                                            <select name="City" class="form-control" id="City" required>
+                                                <option value="" disabled selected>--Select City--</option>
+                                                <option value="5">Delhi</option>
+                                                <option value="17">Mumbai</option>
+                                                <option value="2">Bangalore</option>
+                                                <option value="8">Hyderabad</option>
+                                                <option value="13">Kolkata</option>
+                                                <option value="4">Chennai</option>
+                                                <option value="21">Pune</option>
+                                                <option value="1">Ahmedabad</option>
+                                                <option value="10">Jaipur</option>
+                                                <option value="14">Lucknow</option>
+                                                <option value="12">Kanpur</option>
+                                                <option value="24">Surat</option>
+                                                <option value="18">Nagpur</option>
+                                                <option value="0">Agra</option>
+                                                <option value="15">Ludhiana</option>
+                                                <option value="28">Visakhapatnam</option>
+                                                <option value="25">Thane</option>
+                                                <option value="7">Ghaziabad</option>
+                                                <option value="9">Indore</option>
+                                                <option value="20">Patna</option>
+                                                <option value="3">Bhopal</option>
+                                                <option value="16">Meerut</option>
+                                                <option value="23">Srinagar</option>
+                                                <option value="19">Nashik</option>
+                                                <option value="27">Vasai</option>
+                                                <option value="26">Varanasi</option>
+                                                <option value="11">Kalyan</option>
+                                                <option value="6">Faridabad</option>
+                                                <option value="22">Rajkot</option>
+                                            </select>
+                                            <label for="City">City</label>
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="col-lg-12 col-xl-6">
+                                        <div class="form-floating">
+                                          <select name="locality" class="form-control" id="locality" required>
+                                            <option value="Adajan">Adajan</option>
+                                            <option value="Agashi">Agashi</option>
+                                            <option value="Akkayyapalem">Akkayyapalem</option>
+                                            <option value="Alambagh">Alambagh</option>
+                                            <option value="Ambad">Ambad</option>
+                                            <option value="Ameerpet">Ameerpet</option>
+                                            <option value="Andheri">Andheri</option>
+                                            <option value="Anisabad">Anisabad</option>
+                                            <option value="Arya Nagar">Arya Nagar</option>
+                                            <option value="Ashok Rajpath">Ashok Rajpath</option>
+                                            <option value="Badoli">Badoli</option>
+                                            <option value="Bairagarh">Bairagarh</option>
+                                            <option value="Bajaj Nagar">Bajaj Nagar</option>
+                                            <option value="Bandra">Bandra</option>
+                                            <option value="Baner">Baner</option>
+                                            <option value="Begumpet">Begumpet</option>
+                                            <option value="Bemina">Bemina</option>
+                                            <option value="Bengali Square">Bengali Square</option>
+                                            <option value="Bhawarkua">Bhawarkua</option>
+                                            <option value="BHEL Township">BHEL Township</option>
+                                            <option value="Bhelupur">Bhelupur</option>
+                                            <option value="Bhopar">Bhopar</option>
+                                            <option value="Bodakdev">Bodakdev</option>
+                                            <option value="Chandkheda">Chandkheda</option>
+                                            <option value="Chhatribagh">Chhatribagh</option>
+                                            <option value="Chowk">Chowk</option>
+                                            <option value="Cole">Cole</option>
+                                            <option value="Connaught Place">Connaught Place</option>
+                                            <option value="Dadar">Dadar</option>
+                                            <option value="Dhoj">Dhoj</option>
+                                            <option value="Dilsukhnagar">Dilsukhnagar</option>
+                                            <option value="Dumdum">Dumdum</option>
+                                            <option value="Dwarka">Dwarka</option>
+                                            <option value="Electronic City">Electronic City</option>
+                                            <option value="Faridabad City">Faridabad City</option>
+                                            <option value="Fatehabad Road">Fatehabad Road</option>
+                                            <option value="Ferozepur Road">Ferozepur Road</option>
+                                            <option value="Gajuwaka">Gajuwaka</option>
+                                            <option value="Gandhi Maidan">Gandhi Maidan</option>
+                                            <option value="Ganga Nagar">Ganga Nagar</option>
+                                            <option value="Garia">Garia</option>
+                                            <option value="Ghodbunder Road">Ghodbunder Road</option>
+                                            <option value="Gondal Road">Gondal Road</option>
+                                            <option value="Govind Nagar">Govind Nagar</option>
+                                            <option value="Gulmohar">Gulmohar</option>
+                                            <option value="Hadapsar">Hadapsar</option>
+                                            <option value="Haibowal Kalan">Haibowal Kalan</option>
+                                            <option value="Hebbal">Hebbal</option>
+                                            <option value="Howrah">Howrah</option>
+                                            <option value="Indira Circle">Indira Circle</option>
+                                            <option value="Indiranagar">Indiranagar</option>
+                                            <option value="Itwari">Itwari</option>
+                                            <option value="Jagatpura">Jagatpura</option>
+                                            <option value="Jamalpur">Jamalpur</option>
+                                            <option value="Jankipuram">Jankipuram</option>
+                                            <option value="Jaripatka">Jaripatka</option>
+                                            <option value="Jhotwara">Jhotwara</option>
+                                            <option value="Jubilee Hills">Jubilee Hills</option>
+                                            <option value="Juhu">Juhu</option>
+                                            <option value="Kalyan City">Kalyan City</option>
+                                            <option value="Karan Nagar">Karan Nagar</option>
+                                            <option value="Karol Bagh">Karol Bagh</option>
+                                            <option value="Karond">Karond</option>
+                                            <option value="Katargam">Katargam</option>
+                                            <option value="Kaushambi">Kaushambi</option>
+                                            <option value="Kavi Nagar">Kavi Nagar</option>
+                                            <option value="Khajrana">Khajrana</option>
+                                            <option value="Khandari">Khandari</option>
+                                            <option value="Kidwai Nagar">Kidwai Nagar</option>
+                                            <option value="Kohefiza">Kohefiza</option>
+                                            <option value="Kopri">Kopri</option>
+                                            <option value="Koramangala">Koramangala</option>
+                                            <option value="Lajpat Nagar">Lajpat Nagar</option>
+                                            <option value="Loha Mandi">Loha Mandi</option>
+                                            <option value="Maddilapalem">Maddilapalem</option>
+                                            <option value="Magarpatta">Magarpatta</option>
+                                            <option value="Mahanagar">Mahanagar</option>
+                                            <option value="Mahatma Nagar">Mahatma Nagar</option>
+                                            <option value="Manewada">Manewada</option>
+                                            <option value="Manikonda">Manikonda</option>
+                                            <option value="Masaurhi">Masaurhi</option>
+                                            <option value="Mharal Bk">Mharal Bk</option>
+                                            <option value="Miller Ganj">Miller Ganj</option>
+                                            <option value="Mira Road">Mira Road</option>
+                                            <option value="Modinagar">Modinagar</option>
+                                            <option value="Modipuram">Modipuram</option>
+                                            <option value="Mulund">Mulund</option>
+                                            <option value="MVP Colony">MVP Colony</option>
+                                            <option value="Mylapore">Mylapore</option>
+                                            <option value="Naranpura">Naranpura</option>
+                                            <option value="Nashik Road">Nashik Road</option>
+                                            <option value="Navghar">Navghar</option>
+                                            <option value="Nawabganj">Nawabganj</option>
+                                            <option value="Nishat">Nishat</option>
+                                            <option value="Nowgam">Nowgam</option>
+                                            <option value="Nungambakkam">Nungambakkam</option>
+                                            <option value="Pakhowal Road">Pakhowal Road</option>
+                                            <option value="Pallavpuram">Pallavpuram</option>
+                                            <option value="Park Street">Park Street</option>
+                                            <option value="Patliputra Colony">Patliputra Colony</option>
+                                            <option value="Perungudi">Perungudi</option>
+                                            <option value="Phulwaria">Phulwaria</option>
+                                            <option value="Pimpri">Pimpri</option>
+                                            <option value="Piplod">Piplod</option>
+                                            <option value="Pisawali">Pisawali</option>
+                                            <option value="Raiya Road">Raiya Road</option>
+                                            <option value="Raja Park">Raja Park</option>
+                                            <option value="Rajajipuram">Rajajipuram</option>
+                                            <option value="Ramdaspeth">Ramdaspeth</option>
+                                            <option value="Ramnagar Nagar">Ramnagar Nagar</option>
+                                            <option value="Sadar Bazaar">Sadar Bazaar</option>
+                                            <option value="Saket">Saket</option>
+                                            <option value="Salt Lake">Salt Lake</option>
+                                            <option value="Sativali">Sativali</option>
+                                            <option value="Scheme 78">Scheme 78</option>
+                                            <option value="Shalimar">Shalimar</option>
+                                            <option value="Shapar">Shapar</option>
+                                            <option value="Shastri Nagar">Shastri Nagar</option>
+                                            <option value="Shivdaspur">Shivdaspur</option>
+                                            <option value="Shivpur">Shivpur</option>
+                                            <option value="Shyam Nagar">Shyam Nagar</option>
+                                            <option value="Sikandra">Sikandra</option>
+                                            <option value="Siripuram">Siripuram</option>
+                                            <option value="Swaroop Nagar">Swaroop Nagar</option>
+                                            <option value="Tambaram">Tambaram</option>
+                                            <option value="Thaltej">Thaltej</option>
+                                            <option value="Thiruvanmiyur">Thiruvanmiyur</option>
+                                            <option value="Tidke Colony">Tidke Colony</option>
+                                            <option value="Tilak Nagar">Tilak Nagar</option>
+                                            <option value="Tilpat">Tilpat</option>
+                                            <option value="Tonk Road">Tonk Road</option>
+                                            <option value="Trans Yamuna">Trans Yamuna</option>
+                                            <option value="Varachha">Varachha</option>
+                                            <option value="Vartak Nagar">Vartak Nagar</option>
+                                            <option value="Vasai">Vasai</option>
+                                            <option value="Vasai East">Vasai East</option>
+                                            <option value="Vasai West">Vasai West</option>
+                                            <option value="Vastrapur">Vastrapur</option>
+                                            <option value="Vasundhara">Vasundhara</option>
+                                            <option value="Vesu">Vesu</option>
+                                            <option value="Wakad">Wakad</option>
+                                            <option value="Whitefield">Whitefield</option>
+                                          </select>
+                                          <label for="locality">Locality</label>
+                                        </div>
+                                      </div>
+                                      
+                                    <div class="col-lg-12 col-xl-6">
+                                        <label for="Victim_Age">Victim Age</label>
+                                        <input type="range" name="Victim_Age" class="form-control" id="Victim_Age" min="1" max="100" oninput="ageOutput.value = Victim_Age.value" required>
+                                        <output name="ageOutput" id="ageOutput">50</output>
+                                    </div>
+                                    
+                                    
+                                    <!-- Victim Gender (Female=0, Male=1, Others=2) -->
+                                    <div class="col-lg-12 col-xl-6">
+                                        <div class="form-floating">
+                                            <select name="Victim_Gender" class="form-control" id="Victim_Gender" required>
+                                                <option value="" disabled selected>--Select Gender--</option>
+                                                <option value="0">Female</option>
+                                                <option value="1">Male</option>
+                                                <option value="2">Others</option>
+                                            </select>
+                                            <label for="Victim_Gender">Victim Gender</label>
+                                        </div>
+                                    </div>
+                                  
+                                      
+                                    
+                                    <!-- Submit Button -->
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section><!-- /Team Section -->
+        </section><!-- /Starter Section Section -->
+    </main>
+
+    <footer id="footer" class="footer dark-background">
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-12 footer-newsletter footer-about">
+                    <a href="{% url "user_dashboard" %}" class="logo d-flex align-items-center">
+                        <span class="sitename">Crime Detection</span>
+                    </a>
+                    <p>
+                        🔍 Empowering Security with Artificial Intelligence<br><br>
+                        Leveraging machine learning to detect, analyze, and prevent criminal activities in real-time. Our AI-driven solutions help law enforcement and security agencies make data-driven decisions for a safer society.
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-6 footer-links" style="padding-left: 120px;">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="{% url 'user_dashboard' %}">Dashboard</a></li>
+                        <li><a href="{% url 'detect' %}">Crime Detection</a></li>
+                        <li><a href="{% url 'profile' %}">Profile</a></li>
+                        <li><a href="{% url 'user_feedback' %}">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 footer-about footer-newsletter">
+                    <h4>Contact Information</h4>
+                    <div class="footer-contact pt-3">
+                        <p>
+
+                        </p>
+                        <p class="mt-3"><strong>Phone:</strong> <span></span></p>
+                        <p><strong>Email:</strong> <span>info@svist.ac.in</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-4">
+                        <a href=""><i class="bi bi-twitter-x"></i></a>
+                        <a href=""><i class="bi bi-facebook"></i></a>
+                        <a href=""><i class="bi bi-instagram"></i></a>
+                        <a href=""><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename"><a href="{% url 'home' %}">Crime Detection</a></strong> <span>All Rights Reserved</span></p>
+            <div class="credits">
+                Designed & Distributed By <a href="https://svist.ac.in/">svist.ac.in</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static "main/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "main/vendor/php-email-form/validate.js" %}"></script>
+    <script src="{% static "main/vendor/aos/aos.js" %}"></script>
+    <script src="{% static "main/vendor/glightbox/js/glightbox.min.js" %}"></script>
+    <script src="{% static "main/vendor/purecounter/purecounter_vanilla.js" %}"></script>
+    <script src="{% static "main/vendor/swiper/swiper-bundle.min.js" %}"></script>
+    <!-- Main JS File -->
+    <script src="{% static "main/js/main.js" %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <script>swal({
+                        title: "Success!",
+                        text: "{{message}}",
+                        icon: "success",
+                        button: "OK",
+                    });
+                </script>
+            
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                <script>swal({
+                        title: "Warning :)",
+                        text: "{{message}}",
+                        icon: "warning",
+                        button: "OK",
+                    
+                    });
+                </script>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                <script>swal({
+                        title: "info :)",
+                        text: "{{message}}",
+                        icon: "info",
+                        button: "OK",
+                    });
+                </script>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <script>swal({
+                        title: "error :)",
+                        text: "{{message}}",
+                        icon: "error",
+                        button: "OK",
+                    });
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
